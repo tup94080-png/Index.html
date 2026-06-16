@@ -1,0 +1,325 @@
+Piky 2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research & Media Portal</title>
+    <style>
+        /* Modern Gradient Background & Reset */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%); 
+            min-height: 100vh;
+            color: #f1f5f9;
+        }
+
+        /* Container styled with a sleek dark-mode card design */
+        main { 
+            max-width: 900px; 
+            margin: 40px auto; 
+            background: rgba(30, 41, 59, 0.7); 
+            backdrop-filter: blur(12px);
+            padding: 30px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Modern Trends Title */
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            background: linear-gradient(to right, #38bdf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Enhanced Interactive Upload Area */
+        .upload-section { 
+            margin-bottom: 35px; 
+            text-align: center; 
+            border: 2px dashed rgba(192, 132, 252, 0.4);
+            padding: 30px 20px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .upload-section:hover {
+            border-color: #38bdf8;
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        /* Stylized custom upload label replacing the old browser look */
+        .custom-file-upload {
+            display: inline-block;
+            padding: 10px 22px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            color: white;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+            margin-right: 10px;
+        }
+
+        .custom-file-upload:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+        }
+
+        /* Hide the ugly default browser choose-file element */
+        .upload-section input[type="file"] {
+            display: none;
+        }
+
+        /* Modern Upload Action Button */
+        .btn-primary {
+            padding: 10px 22px;
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: #38bdf8;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+        }
+
+        /* File Name Preview Text */
+        #fileNameDisplay {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        /* Modern Grid System */
+        .gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+            gap: 20px; 
+        }
+
+        /* Image Card Enhancements */
+        .image-card { 
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            padding: 15px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .image-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(192, 132, 252, 0.3);
+        }
+
+        .image-card img { 
+            width: 100%; 
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px; 
+            margin-bottom: 12px;
+        }
+
+        /* Functional interaction section */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .like-btn {
+            background: transparent;
+            border: 1px solid #f43f5e;
+            color: #f43f5e;
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .like-btn:hover {
+            background: #f43f5e;
+            color: white;
+        }
+
+        .likes-count {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        /* Comments Styling */
+        .comments-section {
+            margin-top: 8px;
+        }
+
+        .comment-input-group {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .comments-section input { 
+            flex: 1;
+            padding: 8px 12px; 
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .comments-section input:focus {
+            outline: none;
+            border-color: #a855f7;
+        }
+
+        .comments-section button {
+            background: #334155;
+            color: white;
+            border: none;
+            padding: 0 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .comments-section button:hover {
+            background: #475569;
+        }
+
+        .comment-list { 
+            list-style: none; 
+            padding: 0; 
+            margin: 0; 
+            max-height: 80px;
+            overflow-y: auto;
+        }
+
+        .comment-list li {
+            background: rgba(15, 23, 42, 0.3);
+            padding: 6px 10px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            border-left: 2px solid #a855f7;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <h2>Research & Media Portal</h2>
+        
+        <section class="upload-section">
+            <label for="imageInput" class="custom-file-upload">
+                Choose Image
+            </label>
+            <input type="file" id="imageInput" accept="image/*" onchange="displayFileName()">
+            <button class="btn-primary" onclick="uploadImage()">Upload to Gallery</button>
+            <span id="fileNameDisplay">No file selected</span>
+        </section>
+
+        <section id="gallery" class="gallery-grid">
+            </section>
+    </main>
+
+    <script>
+        // Shows the user the name of the file they selected before they hit upload
+        function displayFileName() {
+            const input = document.getElementById('imageInput');
+            const display = document.getElementById('fileNameDisplay');
+            if (input.files && input.files[0]) {
+                display.textContent = "Selected: " + input.files[0].name;
+            } else {
+                display.textContent = "No file selected";
+            }
+        }
+
+        function uploadImage() {
+            const input = document.getElementById('imageInput');
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    createImageCard(e.target.result);
+                    // Reset input after successful upload
+                    input.value = '';
+                    document.getElementById('fileNameDisplay').textContent = "No file selected";
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function createImageCard(imageSrc) {
+            const gallery = document.getElementById('gallery');
+            const card = document.createElement('div');
+            card.className = 'image-card';
+            card.innerHTML = `
+                <img src="${imageSrc}" alt="Uploaded Data Image">
+                <div class="interaction-bar">
+                    <button class="like-btn" onclick="likeImage(this)">❤ Like</button>
+                    <span class="likes-count">0 Likes</span>
+                </div>
+                <div class="comments-section">
+                    <div class="comment-input-group">
+                        <input type="text" placeholder="Add notes or comment...">
+                        <button onclick="addComment(this)">Send</button>
+                    </div>
+                    <ul class="comment-list"></ul>
+                </div>
+            `;
+            gallery.appendChild(card);
+        }
+
+        function likeImage(button) {
+    const span = button.nextElementSibling;
+    let likes = parseInt(span.textContent) || 0;
+    
+    // Check if this button has already been clicked by the user
+    if (!button.dataset.liked) {
+        likes += 1;
+        span.textContent = `${likes} Likes`;
+        
+        // Mark it as liked so they can't click it again
+        button.dataset.liked = "true";
+        button.style.opacity = "0.6"; // Dim the button visually
+        button.style.cursor = "not-allowed"; // Change cursor to show it's disabled
+        button.textContent = "✔ Liked"; // Change text to show success
+    }
+}
+
+
+        function addComment(button) {
+            const input = button.previousElementSibling;
+            const commentText = input.value;
+            if (commentText) {
+                const commentList = button.parentElement.nextElementSibling;
+                const newComment = document.createElement('li');
+                newComment.textContent = commentText;
+                commentList.appendChild(newComment);
+                input.value = '';
+            }
+        }
+    </script>
+</body>
+</html>
+
